@@ -16,9 +16,9 @@ async fn main() {
             </head>
             
             
-            <body class="bg-gray-900 text-white w-screen h-screen">
+            <body class="bg-gray-900 text-white w-screen">
                 <!-- Inside the <body> section -->
-                    <div id="squaresGrid" style="display: grid;
+                    <div id="squaresGrid" class="" style="display: grid;
                         grid-template-columns: repeat(auto-fill, minmax(10px, 1fr));
                         gap: 20px;
                         max-width: 100%;
@@ -26,30 +26,44 @@ async fn main() {
                         padding: 2px;">
                     </div>
                     <script>
-                        const options = ['bg-gray-800', 'none'];
+                        // Calculate the number of rows based on the total height of the content
+// Define the variables for boxSize and spacing
+const boxSize = 50;
+const spacing = 20;
 
-                        const boxSize = 50; // Width and height of each box in pixels
-                        const spacing = 20;  // Adjust the spacing as needed
+// Calculate the number of columns based on the width of the viewport
+const numCols = Math.floor((window.innerWidth - 4) / (boxSize + spacing));
 
-                        // Calculate the number of rows and columns based on the grid size
-                        const numCols = Math.floor((window.innerWidth - 4) / (boxSize + spacing));
-                        const numRows = Math.floor((window.innerHeight - 4) / (boxSize + spacing));
+// Calculate the number of rows based on the total height of the content
+const totalContentHeight = numCols * (boxSize + spacing);
+const windowHeight = window.innerHeight;
+const numVisibleRows = Math.ceil(windowHeight / (boxSize + spacing));
+const numTotalRows = Math.ceil(totalContentHeight / (boxSize + spacing));
 
-                        const gridContainer = document.getElementById('squaresGrid');
-                        gridContainer.style.gridTemplateColumns = `repeat(${numCols}, ${boxSize}px)`;
-                        gridContainer.style.gridTemplateRows = `repeat(${numRows}, ${boxSize}px)`;
+const gridContainer = document.getElementById('squaresGrid');
+gridContainer.style.gridTemplateColumns = `repeat(${numCols}, ${boxSize}px)`;
+gridContainer.style.gridTemplateRows = `repeat(${numTotalRows}, ${boxSize}px)`;
+gridContainer.style.height = `${totalContentHeight}px`; // Set the height
+const options = ['lime', 'none'];
 
-                        for (let row = 0; row < numRows; row++) {
-                            for (let col = 0; col < numCols; col++) {
-                                const box = document.createElement('div'); // Changed <p> to <div>
-                                box.classList.add('square', options[Math.floor(Math.random() * 2)]);
-                                box.style.width = `${boxSize}px`;
-                                box.style.height = `${boxSize}px`;
-                                box.style.marginRight = `${spacing}px`;
-                                box.style.marginBottom = `${spacing}px`;
-                                gridContainer.appendChild(box);
-                            }
-                        }
+for (let row = 0; row < numVisibleRows; row++) {
+    for (let col = 0; col < numCols; col++) {
+        const box = document.createElement('div');
+        const className = options[Math.floor(Math.random() * 2)];
+        if (className == "lime") {
+            box.style.backgroundColor = 'rgb(132 204 22)';
+        } else {
+            box.classList.add(className);
+        }
+        box.classList.add('square', 'rounded-full');
+        box.style.width = `${boxSize}px`;
+        box.style.height = `${boxSize}px`;
+        box.style.marginRight = `${spacing}px`;
+        box.style.marginBottom = `${spacing}px`;
+        gridContainer.appendChild(box);
+    }
+}
+
                     </script>
 
                     
@@ -70,10 +84,12 @@ async fn main() {
                             <a href='#' class="bg-gray-800 p-2 rounded">Sign up</a>
                         </div>
                     </nav>
+                    
                     <section class="text-center relative">
                         
                         
                         <section id="content" class=" flex flex-col items-center text-center w-full h-full box-border ">
+                            <img src="https://thumbs.gfycat.com/HeftyFaintAngelfish-max-1mb.gif" class="text-center">
                             <br>
                             <a class="bg-gradient-to-b from-gray-600 to-gray-800 p-1 rounded" href='#'>Lightbox raises $3M seed round -></a>
                             <br>
@@ -85,7 +101,7 @@ async fn main() {
                             <br>
                             <button class='rounded p-1 bg-blue-500'>Get started for free</button>
                             <br><br>
-                            <img class="w-1/3" src="https://i1.wp.com/gelatologia.com/wp-content/uploads/2020/07/placeholder.png?ssl=1" alt="image holder">
+                            <img class="w-52" src="https://i1.wp.com/gelatologia.com/wp-content/uploads/2020/07/placeholder.png?ssl=1" alt="image holder">
                         </section>
                     </section>
                 </section>
